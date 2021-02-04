@@ -1,0 +1,2 @@
+# glitch_discord_bot
+glitchを利用したdiscordBOTの制作
