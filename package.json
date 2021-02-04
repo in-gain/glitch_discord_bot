@@ -4,16 +4,16 @@
   "description": "glitchを利用したdiscordBOTの制作",
   "main": "main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node main.js"
   },
   "repository": {
-    "type": "git",
-    "url": "git+https://github.com/in-gain/glitch_discord_bot.git"
+    "url": "https://glitch.com/edit/#!/held-patch-knife"
   },
   "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/in-gain/glitch_discord_bot/issues"
-  },
-  "homepage": "https://github.com/in-gain/glitch_discord_bot#readme"
+  "license": "MIT",
+  "dependencies": {
+    "discord.js": "^12.5.1",
+    "http": "0.0.1-security",
+    "querystring": "^0.2.0"
+  }
 }
