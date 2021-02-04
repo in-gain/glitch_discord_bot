@@ -1,6 +1,7 @@
 const discord = require("discord.js");
 const http = require("http");
 const queryString = require("querystring");
+const request = require("request");
 const client = new discord.Client();
 
 //Response for Uptime Robot
@@ -38,19 +39,21 @@ client.on("ready", () => {
 });
 
 client.on("message", message => {
-  if (message.author.id === "806881579322441759") {
+  if (message.author.id === client.user.id){
     return;
   }
-
-  if (message.isMemberMentioned(client.user)) {
-    if (message.content.indexOf("新しいスケジュール") > 0) {
-      sendGAS();
+  console.log(client.user);
+  console.log(message.mentions)
+  if (message.mentions.has(client.user)) {
+    if (message.content.includes("新しいスケジュール")) {
+      sendGAS(message);
+      console.log('GASに送ったぞ')
       return;
     }
   }
 });
 
-if (process.env.DISCORD_BOT_TOKEN) {
+if (!process.env.DISCORD_BOT_TOKEN) {
   console.log("discordのBOTトークンを設定してください。");
   process.exit(-1);
 }
@@ -69,11 +72,10 @@ const sendGAS = msg => {
     channelId: msg.channel.id
   };
 
-  postMessage(process.env.GAS_URI, jsonData);
+  postData(process.env.GAS_URI, jsonData);
 };
 
 const postData = (uri, jsonData) => {
-  const request = require("request");
   const options = {
     uri: uri,
     headers: { "Content-type": "application/json" },
@@ -92,7 +94,9 @@ const postData = (uri, jsonData) => {
     const message = response.body.message;
     if (userId && channelId && message) {
       const channel = client.channels.get(channelId);
-      channel?.send(message);
+      if(channel){
+        channel.send(message);        
+      }
     }
   });
 };
