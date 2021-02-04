@@ -57,7 +57,54 @@ client.on('message', message=>{
 
     if(msg.isMemberMentioned(client.user)){
         if(msg.content.indexOf('新しいスケジュール') > 0){
-            
+            sendGAS();
+            return;
         }
     }
-})
+});
+
+if(process.env.DISCORD_BOT_TOKEN){
+    console.log('discordのBOTトークンを設定してください。');
+    process.exit(-1);
+}
+
+//GoogleAppScriptへPOSTする。
+const sendGAS = msg =>{
+    const params = msg.content.split(' ');
+    const userId = params.shift();
+    const value = params.join(' ');
+
+    const jsonData ={
+        "userId" : msg.member.id,
+        "value" : value,
+        "message" : msg.content,
+        "channelId" : msg.channel.id,
+    }
+
+    postMessage(process.env.GAS_URI, jsonData);
+}
+
+const postData = (uri,jsonData) => {
+    const request = require('request');
+    const options = {
+        "uri": uri,
+        "headers": {"Content-type" : "application/json"},
+        "json": jsonData,
+        followAllRedirects: true,
+    }
+
+    request.post(options, (error, response, body) =>{
+        if(error){
+            msg.reply(`更新に失敗しました。`);
+            return;
+        }
+
+        const userId = response.body.userid;
+        const channelId = response.body.channelid,
+        const mesasge = response.body.message;
+        if(userId && channelId && message){
+            const channel = client.channels.get(channelId);
+            channel?.send(message);
+        }
+    });
+}
