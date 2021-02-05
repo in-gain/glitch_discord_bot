@@ -50,6 +50,10 @@ client.on("message", message => {
       return;
     }
   }
+
+  if(message.content === `<:noct_hnn_yaha:754237988225024001>`){
+    message.reply('やは～～～～～～');
+  }
 });
 
 if (!process.env.DISCORD_BOT_TOKEN) {
