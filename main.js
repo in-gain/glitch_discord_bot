@@ -42,12 +42,11 @@ client.on("message", message => {
   if (message.author.id === client.user.id){
     return;
   }
-  console.log(client.user);
-  console.log(message.mentions)
+  console.log(message.content);
   if (message.mentions.has(client.user)) {
     if (message.content.includes("新しいスケジュール")) {
       sendGAS(message);
-      console.log('GASに送ったぞ')
+      console.log('GASに送ったぞ');
       return;
     }
   }
@@ -55,7 +54,7 @@ client.on("message", message => {
 
 if (!process.env.DISCORD_BOT_TOKEN) {
   console.log("discordのBOTトークンを設定してください。");
-  process.exit(-1);
+  process.exit(0);
 }
 
 client.login(process.env.DISCORD_BOT_TOKEN);
