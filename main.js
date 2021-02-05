@@ -52,9 +52,12 @@ client.on("message", message => {
   }
 
   if(message.content === `<:noct_hnn_yaha:754237988225024001>`){
-    message.reply('やは～～～～～')
-  .then(() => console.log(`リプライおくったよ ${message.author.username}`))
-  .catch(console.error);
+    message.member.voiceChannel.join().then(connection => {
+      const dispatcher = connection.playFile('yaha.mp3');
+      dispatcher.on('end', reason =>{
+        connection.disconnect();
+      });
+    })
   }
 });
 
