@@ -113,7 +113,6 @@ const sendGAS = msg => {
 };
 
 const postData = (uri, data) => {
-  const responseData;
   const axios = axiosBase.create({
     headers: {
       "Content-Type": "application/json",
