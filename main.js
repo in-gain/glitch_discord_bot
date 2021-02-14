@@ -1,8 +1,9 @@
 const discord = require("discord.js");
 const http = require("http");
 const queryString = require("querystring");
-const request = require("request");
+const axiosBase = require("axios");
 const client = new discord.Client();
+const prefix = "!" //命令文用のプレフィックス。誤動作防止に設定。
 
 //Response for Uptime Robot
 
@@ -49,6 +50,28 @@ client.on("message", message => {
       console.log('GASに送ったぞ');
       return;
     }
+
+    if(message.content.includes(`${prefix}ルーレット`)){
+      const command = message.content.split(' ');
+      const reset = "リセット";
+      const start = "スタート";
+      if(command[1].includes(`${reset}`)){
+        if(command[2]){
+          postData(process.env.CLOUD_FUNCTIONS_URI_RESET,data).done(async response =>{
+            console.log(response);
+          })
+        }else{
+          postData(process.env.CLOUD_FUNCTIONS_URI_RESETALL,data).done(async response =>{
+            console.log(response);
+          })
+        }
+      }
+      if(command[1].includes(`${start}`)){
+        postData(process.env.CLOUD_FUNCTIONS_URI_START,data).done(async response =>{
+          console.log(response);
+        })
+      }
+    }
   }
 
   if(message.content === `<:noct_hnn_yaha:754237988225024001>`){
@@ -83,28 +106,17 @@ const sendGAS = msg => {
   postData(process.env.GAS_URI, jsonData);
 };
 
-const postData = (uri, jsonData) => {
-  const options = {
-    uri: uri,
-    headers: { "Content-type": "application/json" },
-    json: jsonData,
-    followAllRedirects: true
-  };
-
-  request.post(options, (error, response, body) => {
-    if (error) {
-      console.log("error");
-      return;
-    }
-
-    const userId = response.body.userid;
-    const channelId = response.body.channelid;
-    const message = response.body.message;
-    if (userId && channelId && message) {
-      const channel = client.channels.get(channelId);
-      if(channel){
-        channel.send(message);        
-      }
-    }
-  });
+const postData = (uri, data) => {
+  const responseData;
+  const axios = axiosBase.create({
+    headers: {
+      "Content-Type": "application/json",
+      "X-Requested-With": "XMLHttpRequest",
+    },
+    responseType: "json",
+  })
+  return axios.post(uri,data).catch(error =>{
+    console.log(`エラーが発生しました。原因は${error}です。`);
+    return Promise.reject();
+  })
 };
