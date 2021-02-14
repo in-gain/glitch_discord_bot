@@ -58,17 +58,23 @@ client.on("message", message => {
       if(command[1].includes(`${reset}`)){
         if(command[2]){
           postData(process.env.CLOUD_FUNCTIONS_URI_RESET,data).done(async response =>{
-            console.log(response);
+            message.reply(response);
+          }).catch(()=>{
+            message.reply("エラーが発生したよ。ログを見てね。");
           })
         }else{
           postData(process.env.CLOUD_FUNCTIONS_URI_RESETALL,data).done(async response =>{
-            console.log(response);
+            message.reply(response);
+          }).catch(()=>{
+            message.reply("エラーが発生したよ。ログを見てね。");
           })
         }
       }
       if(command[1].includes(`${start}`)){
         postData(process.env.CLOUD_FUNCTIONS_URI_START,data).done(async response =>{
-          console.log(response);
+          message.reply(response);
+        }).catch(()=>{
+          message.reply("エラーが発生したよ。ログを見てね。");
         })
       }
     }
