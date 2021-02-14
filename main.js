@@ -8,31 +8,31 @@ const prefix = "!" //命令文用のプレフィックス。誤動作防止に�
 //Response for Uptime Robot
 
 http.createServer((req, res) => {
-    if (req.method == "POST") {
-      var data = "";
-      req.on("data", function(chunk) {
-        data += chunk;
-      });
-      req.on("end", function() {
-        if (!data) {
-          console.log("No post data");
-          res.end();
-          return;
-        }
-        var dataObject = queryString.parse(data);
-        console.log("post:" + dataObject.type);
-        if (dataObject.type == "wake") {
-          console.log("Woke up in post");
-          res.end();
-          return;
-        }
+  if (req.method == "POST") {
+    var data = "";
+    req.on("data", function (chunk) {
+      data += chunk;
+    });
+    req.on("end", function () {
+      if (!data) {
+        console.log("No post data");
         res.end();
-      });
-    } else if (req.method == "GET") {
-      res.writeHead(200, { "Content-Type": "text/plain" });
-      res.end("Discord Bot is active now\n");
-    }
-  })
+        return;
+      }
+      var dataObject = queryString.parse(data);
+      console.log("post:" + dataObject.type);
+      if (dataObject.type == "wake") {
+        console.log("Woke up in post");
+        res.end();
+        return;
+      }
+      res.end();
+    });
+  } else if (req.method == "GET") {
+    res.writeHead(200, { "Content-Type": "text/plain" });
+    res.end("Discord Bot is active now\n");
+  }
+})
   .listen(3000); //PORT3000でリッスンする。
 
 client.on("ready", () => {
@@ -40,7 +40,7 @@ client.on("ready", () => {
 });
 
 client.on("message", message => {
-  if (message.author.id === client.user.id){
+  if (message.author.id === client.user.id) {
     return;
   }
   console.log(message.content);
@@ -51,39 +51,42 @@ client.on("message", message => {
       return;
     }
 
-    if(message.content.includes(`${prefix}ルーレット`)){
-      const command = message.content.split(' ');
+    if (message.content.includes(`${prefix}ルーレット`)) {
+      const option = message.content.split(' ');
       const reset = "リセット";
       const start = "スタート";
-      if(command[1].includes(`${reset}`)){
-        if(command[2]){
-          postData(process.env.CLOUD_FUNCTIONS_URI_RESET,data).done(async response =>{
+      const data = {};
+      if (option[1]) {
+        if (option[1].includes(`${reset}`)) {
+          if (option[2]) {
+            postData(process.env.CLOUD_FUNCTIONS_URI_RESET, data).done(async response => {
+              message.reply(response);
+            }).catch(() => {
+              message.reply("エラーが発生したよ。ログを見てね。");
+            })
+          } else {
+            postData(process.env.CLOUD_FUNCTIONS_URI_RESETALL, data).done(async response => {
+              message.reply(response);
+            }).catch(() => {
+              message.reply("エラーが発生したよ。ログを見てね。");
+            })
+          }
+        }
+        if (option[1].includes(`${start}`)) {
+          postData(process.env.CLOUD_FUNCTIONS_URI_START, data).done(async response => {
             message.reply(response);
-          }).catch(()=>{
-            message.reply("エラーが発生したよ。ログを見てね。");
-          })
-        }else{
-          postData(process.env.CLOUD_FUNCTIONS_URI_RESETALL,data).done(async response =>{
-            message.reply(response);
-          }).catch(()=>{
+          }).catch(() => {
             message.reply("エラーが発生したよ。ログを見てね。");
           })
         }
       }
-      if(command[1].includes(`${start}`)){
-        postData(process.env.CLOUD_FUNCTIONS_URI_START,data).done(async response =>{
-          message.reply(response);
-        }).catch(()=>{
-          message.reply("エラーが発生したよ。ログを見てね。");
-        })
-      }
     }
   }
 
-  if(message.content === `<:noct_hnn_yaha:754237988225024001>`){
+  if (message.content === `<:noct_hnn_yaha:754237988225024001>`) {
     message.member.voiceChannel.join().then(connection => {
       const dispatcher = connection.playFile('yaha.mp3');
-      dispatcher.on('end', reason =>{
+      dispatcher.on('end', reason => {
         connection.disconnect();
       });
     })
@@ -120,7 +123,7 @@ const postData = (uri, data) => {
     },
     responseType: "json",
   })
-  return axios.post(uri,data).catch(error =>{
+  return axios.post(uri, data).catch(error => {
     console.log(`エラーが発生しました。原因は${error}です。`);
     return Promise.reject();
   })
