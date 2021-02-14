@@ -124,7 +124,9 @@ const postData = (uri, data) => {
     },
     responseType: "json",
   })
-  return axios.post(uri, data).catch(error => {
+  return axios.post(uri, data).then(response => {
+    return Promise.resolve(response);
+  }).catch(error => {
     console.log(`エラーが発生しました。原因は${error}です。`);
     return Promise.reject();
   })
