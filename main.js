@@ -64,13 +64,13 @@ client.on("message", message => {
           postData(process.env.CLOUD_FUNCTIONS_URI_RESET, data).then(async response => {
             message.reply(response);
           }).catch(() => {
-            message.reply("エラーが発生したよ。ログを見てね。");
+            message.reply(`エラーが発生したよ。ログを見てね。くじけないでがんばって。`);
           })
         } else {
           postData(process.env.CLOUD_FUNCTIONS_URI_RESETALL, data).then(async response => {
             message.reply(response);
           }).catch(() => {
-            message.reply("エラーが発生したよ。ログを見てね。");
+            message.reply(`エラーが発生したよ。ログを見てね。くじけないでがんばって。`);
           })
         }
       }
@@ -78,7 +78,7 @@ client.on("message", message => {
         postData(process.env.CLOUD_FUNCTIONS_URI_START, data).then(async response => {
           message.reply(response);
         }).catch(() => {
-          message.reply("エラーが発生したよ。ログを見てね。");
+          message.reply(`エラーが発生したよ。ログを見てね。くじけないでがんばって。`);
         })
       }
     }
