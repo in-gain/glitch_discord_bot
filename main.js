@@ -50,35 +50,36 @@ client.on("message", message => {
       console.log('GASに送ったぞ');
       return;
     }
+  }
 
-    if (message.content.includes(`${prefix}ルーレット`)) {
-      const option = message.content.split(' ');
-      const reset = "リセット";
-      const start = "スタート";
-      const data = {};
-      if (option[1]) {
-        if (option[1].includes(`${reset}`)) {
-          if (option[2]) {
-            postData(process.env.CLOUD_FUNCTIONS_URI_RESET, data).done(async response => {
-              message.reply(response);
-            }).catch(() => {
-              message.reply("エラーが発生したよ。ログを見てね。");
-            })
-          } else {
-            postData(process.env.CLOUD_FUNCTIONS_URI_RESETALL, data).done(async response => {
-              message.reply(response);
-            }).catch(() => {
-              message.reply("エラーが発生したよ。ログを見てね。");
-            })
-          }
-        }
-        if (option[1].includes(`${start}`)) {
-          postData(process.env.CLOUD_FUNCTIONS_URI_START, data).done(async response => {
+  if (message.content.includes(`${prefix}ルーレット`)) {
+    const option = message.content.split(' ');
+    const reset = "リセット";
+    const start = "スタート";
+    const data = {};
+    console.log(option);
+    if (option[1]) {
+      if (option[1].includes(`${reset}`)) {
+        if (option[2]) {
+          postData(process.env.CLOUD_FUNCTIONS_URI_RESET, data).done(async response => {
+            message.reply(response);
+          }).catch(() => {
+            message.reply("エラーが発生したよ。ログを見てね。");
+          })
+        } else {
+          postData(process.env.CLOUD_FUNCTIONS_URI_RESETALL, data).done(async response => {
             message.reply(response);
           }).catch(() => {
             message.reply("エラーが発生したよ。ログを見てね。");
           })
         }
+      }
+      if (option[1].includes(`${start}`)) {
+        postData(process.env.CLOUD_FUNCTIONS_URI_START, data).done(async response => {
+          message.reply(response);
+        }).catch(() => {
+          message.reply("エラーが発生したよ。ログを見てね。");
+        })
       }
     }
   }
