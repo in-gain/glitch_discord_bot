@@ -1,4 +1,4 @@
-const idolStamp = {
+exports.stamps = {
     櫻木真乃: ':mano02:',
     風野灯織: ':hiori01:',
     八宮めぐる: ':meguru02:',
@@ -23,5 +23,3 @@ const idolStamp = {
     福丸小糸: ':noct_kit_yoyu:',
     市川雛菜: ':noct_hnn_yaha:'
 }
-
-exports = idolStamp;

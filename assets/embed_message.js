@@ -1,6 +1,6 @@
  const idolStamp = require('./idol_stamp')
  
- const rouletteMessage = idolsArr => {
+exports.rouletteMessage = (client,idolsArr) => {
     const ret = {
         embed: {
             author: {
@@ -23,10 +23,9 @@
     }
     idolsArr.forEach(idolName =>{
         ret.embed.fields.push({
-            name: `${idolName}${idolStamp[idolName]}`,
+            name: `${idolName}${idolStamp.stamps[idolName]}`,
             inline: true
         })
     })
     return ret;
 }
-exports = rouletteMessage;
