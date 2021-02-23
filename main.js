@@ -2,7 +2,7 @@ const discord = require("discord.js");
 const http = require("http");
 const queryString = require("querystring");
 const axiosBase = require("axios");
-const { rouletteMessage } = require("./assets/embed_message");
+const rouletteMessage = require("./assets/embed_message")
 const client = new discord.Client();
 const prefix = "!" //命令文用のプレフィックス。誤動作防止に設定。
 

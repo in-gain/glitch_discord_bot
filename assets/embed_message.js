@@ -1,6 +1,6 @@
-import { idolStamp } from "./idol_stamp";
-
-export const rouletteMessage = idolsArr => {
+ const idolStamp = require('./idol_stamp')
+ 
+ const rouletteMessage = idolsArr => {
     const ret = {
         embed: {
             author: {
@@ -29,3 +29,4 @@ export const rouletteMessage = idolsArr => {
     })
     return ret;
 }
+exports = rouletteMessage;
