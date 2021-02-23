@@ -77,7 +77,7 @@ client.on("message", message => {
       }
       if (option[1].includes(`${start}`)) {
         postData(process.env.CLOUD_FUNCTIONS_URI_START, data).then(async response => {
-          message.channel.send(rouletteMessage(response))
+          message.channel.send(rouletteMessage(response.data))
         }).catch(() => {
           message.reply(`エラーが発生したよ。ログを見てね。くじけないでがんばって。`);
         })
