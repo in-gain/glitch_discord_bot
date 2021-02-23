@@ -6,6 +6,9 @@
   "scripts": {
     "start": "node main.js"
   },
+  "engines": {
+    "node": "v12.0.0"
+  },
   "repository": {
     "url": "https://glitch.com/edit/#!/held-patch-knife"
   },
