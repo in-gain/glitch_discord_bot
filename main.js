@@ -2,6 +2,7 @@ const discord = require("discord.js");
 const http = require("http");
 const queryString = require("querystring");
 const axiosBase = require("axios");
+const { rouletteMessage } = require("./assets/embed_message");
 const client = new discord.Client();
 const prefix = "!" //命令文用のプレフィックス。誤動作防止に設定。
 
@@ -76,7 +77,7 @@ client.on("message", message => {
       }
       if (option[1].includes(`${start}`)) {
         postData(process.env.CLOUD_FUNCTIONS_URI_START, data).then(async response => {
-          message.reply(response);
+          message.channel.send(rouletteMessage(response))
         }).catch(() => {
           message.reply(`エラーが発生したよ。ログを見てね。くじけないでがんばって。`);
         })
