@@ -1,5 +1,4 @@
-// const idolStamp = require('./assets/idol_stamp')
-const idolStamp = require('./assets/test_stamp')
+const idolStamp = require('./idol_stamp')
  
 exports.rouletteMessage = (client,idolsArr) => {
     const ret = {
@@ -21,7 +20,7 @@ exports.rouletteMessage = (client,idolsArr) => {
     }
     idolsArr.forEach(idolName =>{
         ret.embed.fields.push({
-            name: `${idolStamp.stamps[idolName]}`,
+            name: `${client.emojis.find(emoji => emoji.name === idolStamp.stamps[idolName])}`,
             value:`${idolName}`,
             inline: true
         })

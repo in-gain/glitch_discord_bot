@@ -81,7 +81,7 @@ client.on("message", message => {
           message.channel.send(embedMessage.rouletteMessage(client,response.data))
           .then(ret => {
             response.data.forEach(idolName => {
-              ret.react(`${idolStamp.stamps[idolName]}`)
+              ret.react(`${client.emojis.find(emoji => emoji.name === idolStamp.stamps[idolName]).id}`)
             })
           })
         }).catch((err) => {
