@@ -13,10 +13,7 @@ exports.rouletteMessage = (client,idolsArr) => {
             color:0x8dbbff,
             footer:{
                 icon_url: client.user.avatarURL,
-                text: "© in_gain | 仲良くなる会bot"
-            },
-            thumbnail:{
-                url:"./curtain.jpg"
+                text: "仲良くなる会をもっと便利にする会"
             },
             fields:[]
         }
