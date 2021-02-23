@@ -3,7 +3,7 @@ const http = require("http");
 const queryString = require("querystring");
 const axiosBase = require("axios");
 const embedMessage = require("./assets/embed_message")
-const idolStamp = require("./assets/test_stamp")
+const idolStamp = require('./assets/idol_stamp')
 const client = new discord.Client();
 const prefix = "!" //命令文用のプレフィックス。誤動作防止に設定。
 

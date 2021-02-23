@@ -1,4 +1,4 @@
- const idolStamp = require('./test_stamp')
+ const idolStamp = require('./idol_stamp')
  
 exports.rouletteMessage = (client,idolsArr) => {
     const ret = {
