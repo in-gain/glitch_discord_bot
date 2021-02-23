@@ -20,7 +20,8 @@ exports.rouletteMessage = (client,idolsArr) => {
     }
     idolsArr.forEach(idolName =>{
         ret.embed.fields.push({
-            name: `${idolName}${idolStamp.stamps[idolName]}`,
+            name: `${idolStamp.stamps[idolName]}`,
+            value:`${idolName}`,
             inline: true
         })
     })
