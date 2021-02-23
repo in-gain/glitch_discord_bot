@@ -1,5 +1,5 @@
 exports.stamps = {
-    櫻木真乃: 'skull',
+    櫻木真乃: 'mano02',
     風野灯織: 'hiori01',
     八宮めぐる: 'meguru02',
     月岡恋鐘: 'kogane01',
