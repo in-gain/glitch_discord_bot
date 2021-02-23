@@ -18,9 +18,10 @@ exports.rouletteMessage = (client,idolsArr) => {
             fields:[]
         }
     }
+    console.log(client.emojis)
     idolsArr.forEach(idolName =>{
         ret.embed.fields.push({
-            name: `${client.emojis.find(emoji => emoji.name === idolStamp.stamps[idolName])}`,
+            name: `${client.emojis.cache.find(emoji => emoji.name === idolStamp.stamps[idolName])}`,
             value:`${idolName}`,
             inline: true
         })
